@@ -8,7 +8,13 @@ class AccountsController < ApplicationController
   end
 
   def update
-    UpdateAccount.call(account: account, params: account_params)
+    result = UpdateAccount.call(account: account, params: account_params)
+
+    if result.success?
+      redirect_to accounts_path
+    else
+      render :edit
+    end
   end
 
   private
