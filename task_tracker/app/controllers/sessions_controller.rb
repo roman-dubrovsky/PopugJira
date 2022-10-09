@@ -4,6 +4,17 @@ class SessionsController < ApplicationController
 
   def create
     user_info = request.env['omniauth.auth']
-    render json: user_info
+    result = Account::FindOrCreate.call(uid: user_info.uid, params: user_info.info.to_h)
+    if result.success?
+      session[:account] = result.account.uid
+      redirect_to root_path
+    else
+      render plain: "Ups"
+    end
+  end
+
+  def destroy
+    session[:account] = nil
+    redirect_to root_path
   end
 end
