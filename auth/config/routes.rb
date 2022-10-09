@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   root 'accounts#index'
 
   resources :accounts, only: %i[index edit update]
+  get '/accounts/current', to: 'accounts#current'
 end
