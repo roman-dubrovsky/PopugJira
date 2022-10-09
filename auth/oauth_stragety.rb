@@ -6,7 +6,7 @@ module OmniAuth
       option :name, :keepa
 
       option :client_options, {
-          :site => "http://localhost:3000/oauth/authorize",
+          :site => "http://localhost:3000",
           :authorize_url => "http://localhost:3000/oauth/authorize"
       }
 

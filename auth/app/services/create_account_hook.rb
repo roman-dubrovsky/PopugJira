@@ -3,7 +3,7 @@ class CreateAccountHook
   
   attr_reader :account
 
-	def initialize(account)
+  def initialize(account)
     @account = account
   end
 
