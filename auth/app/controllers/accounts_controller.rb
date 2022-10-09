@@ -4,6 +4,13 @@ class AccountsController < ApplicationController
   def index
   end
 
+  # GET /accounts/current.json
+  def current
+    respond_to do |format|
+      format.json  { render :json => current_oauth_account }
+    end
+  end
+
   def edit
   end
 
@@ -33,5 +40,13 @@ class AccountsController < ApplicationController
 
   def account
     @_account ||= accounts_scope.find(params[:id])
+  end
+
+  def current_oauth_account
+    if doorkeeper_token
+      Account.find(doorkeeper_token.resource_owner_id)
+    else
+      current_account
+    end
   end
 end
