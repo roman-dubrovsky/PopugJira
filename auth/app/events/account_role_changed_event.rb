@@ -14,7 +14,11 @@ class AccountRoleChangedEvent < BaseEvent
     }
   end
 
-  def self.event_name
+  def event_name
     "AccountRoleChanged"
+  end
+
+  def topic
+    "accounts"
   end
 end
