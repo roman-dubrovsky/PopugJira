@@ -13,12 +13,10 @@ class UpdateAccount
 
   def call
     if account.update(params)
-      update_event = AccountUpdatedEvent.new(account)
-      Producer.call(update_event, topic: "accounts-stream")
+      AccountUpdatedEvent.call(account)
 
       if new_role.present?
-        role_event = AccountRoleChangedEvent.new(account)
-        Producer.call(role_event, topic: "accounts")
+        AccountRoleChangedEvent.call(account)
       end
 
       Result.new(true, account)

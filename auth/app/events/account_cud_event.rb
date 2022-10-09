@@ -15,4 +15,8 @@ class AccountCudEvent < BaseEvent
       position: account.position,
     }
   end
+
+  def topic
+    "accounts-stream"
+  end
 end

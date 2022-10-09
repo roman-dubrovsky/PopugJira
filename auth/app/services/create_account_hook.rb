@@ -8,7 +8,6 @@ class CreateAccountHook
   end
 
   def call
-    event = AccountCreatedEvent.new(account)
-    Producer.call(event, topic: "accounts-stream")
+    AccountCreatedEvent.call(account)
   end
 end
