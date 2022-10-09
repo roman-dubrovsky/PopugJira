@@ -2,7 +2,7 @@ class BaseEvent
   include Callable
 
   def call
-    Producer.call(to_json, topic: topic)
+    WaterDrop::SyncProducer.call(to_json, topic: topic)
   end
 
   def to_json

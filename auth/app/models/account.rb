@@ -22,6 +22,6 @@ class Account < ApplicationRecord
   }
 
   after_create do
-    CreateAccountHook.call(self)
+    CreateAccountHook.call(self.reload)
   end
 end
