@@ -1,0 +1,26 @@
+= link_to "Create Task", new_task_path, class: "btn btn-primary"
+= link_to "Shuffe", shuffle_tasks_path, class: "btn btn-primary", method: :post
+
+table.table
+  thead
+    tr
+      th id
+      th title
+      th created by
+      th owner
+      th State
+      th 
+      th 
+
+  tbody
+    - @tasks.each do |task|
+      tr
+        td= task.uid
+        td= task.title
+        td= task.creator.display_name
+        td= task.owner.display_name
+        td= task.active? ? "Active" : "Completed"
+        td= link_to "Show logs", task_path(task)
+        td
+          - if task.active?
+            = link_to "Mark as completed", complete_task_path(task), method: :post

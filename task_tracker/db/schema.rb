@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_09_043857) do
+ActiveRecord::Schema.define(version: 2022_10_09_133614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,31 @@ ActiveRecord::Schema.define(version: 2022_10_09_043857) do
     t.string "position"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "task_state_logs", force: :cascade do |t|
+    t.bigint "task_id", null: false
+    t.bigint "actor_id"
+    t.bigint "owner_id"
+    t.string "event"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.uuid "public_id", default: -> { "gen_random_uuid()" }
+    t.index ["actor_id"], name: "index_task_state_logs_on_actor_id"
+    t.index ["owner_id"], name: "index_task_state_logs_on_owner_id"
+    t.index ["task_id"], name: "index_task_state_logs_on_task_id"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string "title"
+    t.bigint "creator_id", null: false
+    t.bigint "owner_id", null: false
+    t.boolean "active", default: true
+    t.uuid "uid", default: -> { "gen_random_uuid()" }
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["creator_id"], name: "index_tasks_on_creator_id"
+    t.index ["owner_id"], name: "index_tasks_on_owner_id"
   end
 
 end

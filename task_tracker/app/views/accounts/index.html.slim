@@ -1,0 +1,19 @@
+table.table
+  thead
+    tr
+      th id
+      th email
+      th full name
+      th position
+      th assigned tasks
+      th finished tasks
+
+  tbody
+    - @accounts.each do |account|
+      tr>
+        td= account.uid
+        td= account.email
+        td= account.full_name
+        td= account.position
+        td= account.assigned_tasks.count
+        td= account.finished_tasks.count

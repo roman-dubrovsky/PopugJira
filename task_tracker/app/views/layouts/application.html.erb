@@ -31,11 +31,13 @@
                 </li>
               <% end %>
               <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
+                <%= link_to "Tasks", tasks_path, class: "nav-link" %>
               </li>
-              <li class="nav-item">
-                <a class="nav-link disabled">Disabled</a>
-              </li>
+              <% if current_account&.admin? %>
+                <li class="nav-item">
+                  <%= link_to "Popugs", accounts_path, class: "nav-link" %>
+                </li>
+              <% end %>
             </ul>
           </div>
         </div>

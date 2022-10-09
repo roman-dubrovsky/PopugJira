@@ -1,0 +1,19 @@
+h2= current_task.title
+
+= link_to "Back", tasks_path, class: "btn btn-default"
+
+table.table
+  thead
+    tr
+      th event
+      th actor
+      th owner
+      th time
+
+  tbody
+    - @logs.each do |log|
+      tr
+        td= log.event
+        td= log.actor.display_name
+        td= log.owner.display_name
+        td= I18n.l(log.created_at, format: :short)
