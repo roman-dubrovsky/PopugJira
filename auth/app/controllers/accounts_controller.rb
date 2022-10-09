@@ -1,6 +1,8 @@
 class AccountsController < ApplicationController
   helper_method :accounts_scope, :account
 
+  skip_before_action :authenticate_account!, only: [:current]
+
   def index
   end
 

@@ -7,7 +7,7 @@ Doorkeeper.configure do
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
-    Account.find_by(id: session['warden.user.account.key'].first.first) || redirect_to(new_account_session_path)
+    Account.find_by(id: session['warden.user.account.key']&.first) || redirect_to(new_account_session_path)
     # Put your resource owner authentication logic here.
     # Example implementation:
     #   User.find_by(id: session[:user_id]) || redirect_to(new_user_session_url)
