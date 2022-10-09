@@ -1,0 +1,25 @@
+h1 Hello, #{current_account.email}.
+
+= link_to "Sign out", destroy_account_session_path, method: :delete
+
+table.table
+  thead
+    tr
+      th id
+      th public_id
+      th email
+      th full name
+      th position
+      th role
+      th
+
+  tbody
+    - accounts_scope.each do |account|
+      tr>
+        td= account.id
+        td= account.public_id
+        td= account.email
+        td= account.full_name
+        td= account.position
+        td= account.role
+        td= link_to 'Edit', edit_account_path(account)
