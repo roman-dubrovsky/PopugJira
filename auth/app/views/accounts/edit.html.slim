@@ -1,0 +1,8 @@
+h2 Edit #{account.email}
+
+= simple_form_for account do |f|
+  = f.input :full_name
+  = f.input :position
+  = f.input :role, collection: Account.roles
+  = f.submit "Save", class: "btn btn-primary"
+  = link_to "Back", accounts_path, class: "btn btn-default"
