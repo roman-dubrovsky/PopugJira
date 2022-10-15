@@ -12,7 +12,7 @@ class AssignedTaskEvent < BaseEvent
     {
       uid: task.uid,
       owner: task.owner.uid,
-      time: log.created_at,
+      time: log.created_at.to_s,
     }
   end
 
@@ -22,5 +22,13 @@ class AssignedTaskEvent < BaseEvent
 
   def topic
     "tasks"
+  end
+
+  def event_version
+    1
+  end
+
+  def event_schema
+    'tasks.assigned'
   end
 end

@@ -2,8 +2,8 @@ class AccountChanges < ApplicationConsumer
   def consume
     messages.each do |message|
       payload = message.payload
-      case payload['event_name']
-      when 'AccountCreated'
+      case [payload['event_name'], payload['event_version']]
+      when ['AccountCreated', 1]
         return if Account.find_by(uid: payload['data']["public_id"]).present?
         Account.create(
           uid: payload['data']["public_id"],
@@ -11,11 +11,11 @@ class AccountChanges < ApplicationConsumer
           full_name: payload['data']['full_name'],
           position: payload['data']['position']
         )
-      when 'AccountUpdated'
+      when ['AccountUpdated', 1]
         account = Account.find_by(uid: payload['data']["public_id"])
         return if account.nil?
         account.update(payload['data'].slice('email', 'full_name', 'position'))
-      when 'AccountRoleChanged'
+      when ['AccountRoleChanged', 1]
         account = Account.find_by(uid: payload['data']["public_id"])
         return if account.nil?
         account.update(role: payload['data']['role'])

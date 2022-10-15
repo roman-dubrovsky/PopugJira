@@ -21,4 +21,12 @@ class CreatedTaskEvent < BaseEvent
   def topic
     "tasks-stream"
   end
+
+  def event_version
+    1
+  end
+
+  def event_schema
+    'tasks.created'
+  end
 end
