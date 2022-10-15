@@ -10,8 +10,8 @@ class AssignedTaskEvent < BaseEvent
 
   def event_data
     {
-      uid: task.uid,
-      owner: task.owner.uid,
+      public_id: task.uid,
+      owner_id: task.owner.uid,
       time: log.created_at.to_s,
     }
   end
@@ -25,7 +25,7 @@ class AssignedTaskEvent < BaseEvent
   end
 
   def event_version
-    1
+    2
   end
 
   def event_schema

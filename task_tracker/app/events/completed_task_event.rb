@@ -10,7 +10,8 @@ class CompletedTaskEvent < BaseEvent
 
   def event_data
     {
-      uid: task.uid,
+      public_id: task.uid,
+      owner_id: task.owner.uid,
       time: log.created_at.to_s,
     }
   end
@@ -24,7 +25,7 @@ class CompletedTaskEvent < BaseEvent
   end
 
   def event_version
-    1
+    2
   end
 
   def event_schema

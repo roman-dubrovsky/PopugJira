@@ -9,7 +9,7 @@ class CreatedTaskEvent < BaseEvent
 
   def event_data
     {
-      uid: task.uid,
+      public_id: task.uid,
       title: task.title,
     }
   end
@@ -23,7 +23,7 @@ class CreatedTaskEvent < BaseEvent
   end
 
   def event_version
-    1
+    2
   end
 
   def event_schema
