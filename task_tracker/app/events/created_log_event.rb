@@ -24,4 +24,12 @@ class CreatedLogEvent < BaseEvent
   def topic
     "task_logs-stream"
   end
+
+  def event_version
+    1
+  end
+
+  def event_schema
+    'task_logs.created'
+  end
 end

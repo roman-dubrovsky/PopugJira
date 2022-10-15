@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+
+  "title": "TaskLogs.Created.v1",
+  "description": "json schema for CUD task log events (version 1)",
+
+  "definitions": {
+    "event_data": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string"
+        },
+        "task": {
+          "type": "string"
+        },
+        "actor": {
+          "type": ["string", "null"]
+        },
+        "owner": {
+          "type": "string"
+        },
+        "event": {
+          "enum": ["Task Completed", "Task Created and Assigned", "Task Assigned"]
+        }
+      },
+      "required": [
+        "uid",
+        "task",
+        "owner",
+        "event"
+      ]
+    }
+  },
+
+  "type": "object",
+
+  "properties": {
+    "event_id":      { "type": "string" },
+    "event_version": { "enum": [1] },
+    "event_name":    { "enum": ["TaskLogCreated"] },
+    "event_time":    { "type": "string" },
+    "producer":      { "type": "string" },
+
+    "data": { "$ref": "#/definitions/event_data" }
+  },
+
+  "required": [
+    "event_id",
+    "event_version",
+    "event_name",
+    "event_time",
+    "producer",
+    "data"
+  ]
+}
