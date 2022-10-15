@@ -12,7 +12,7 @@ class CreatedLogEvent < BaseEvent
       uid: log.public_id,
       task: log.task.uid,
       actor: log.actor&.uid,
-      owner: log.actor.uid,
+      owner: log.owner.uid,
       event: log.event,
     }
   end
