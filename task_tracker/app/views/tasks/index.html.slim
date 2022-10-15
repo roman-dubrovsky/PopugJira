@@ -5,6 +5,7 @@ table.table
   thead
     tr
       th id
+      th jira id
       th title
       th created by
       th owner
@@ -16,6 +17,7 @@ table.table
     - @tasks.each do |task|
       tr
         td= task.uid
+        td= task.jira_id
         td= task.title
         td= task.creator.display_name
         td= task.owner.display_name

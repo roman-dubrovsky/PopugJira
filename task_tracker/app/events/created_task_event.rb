@@ -11,6 +11,7 @@ class CreatedTaskEvent < BaseEvent
     {
       public_id: task.uid,
       title: task.title,
+      jira_id: task.jira_id,
     }
   end
 
@@ -23,7 +24,7 @@ class CreatedTaskEvent < BaseEvent
   end
 
   def event_version
-    2
+    3
   end
 
   def event_schema

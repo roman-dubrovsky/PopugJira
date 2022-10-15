@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_09_133614) do
+ActiveRecord::Schema.define(version: 2022_10_15_193919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2022_10_09_133614) do
     t.uuid "uid", default: -> { "gen_random_uuid()" }
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "jira_id"
     t.index ["creator_id"], name: "index_tasks_on_creator_id"
     t.index ["owner_id"], name: "index_tasks_on_owner_id"
   end
