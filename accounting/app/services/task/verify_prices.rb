@@ -11,8 +11,8 @@ class Task::VerifyPrices
     return task if !task.assign_price.zero? && !task.complete_price.zero?
 
     task.title ||= "Undefined"
-    task.assign_price_cents = generate_assign_price if task.assign_price.zero?
-    task.complete_price_cents = generate_complete_price if task.complete_price.zero?
+    task.assign_price = generate_assign_price if task.assign_price.zero?
+    task.complete_price = generate_complete_price if task.complete_price.zero?
     task.save
     task
   end

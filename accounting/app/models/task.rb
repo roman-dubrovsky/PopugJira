@@ -6,4 +6,6 @@ class Task < ApplicationRecord
   validates :assign_price_cents, :complete_price_cents, numericality: {
     greater_than: 0,
   }
+
+  belongs_to :owner, class_name: "Account"
 end
