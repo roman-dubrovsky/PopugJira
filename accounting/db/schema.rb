@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_16_010049) do
+ActiveRecord::Schema.define(version: 2022_10_16_021047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,22 @@ ActiveRecord::Schema.define(version: 2022_10_16_010049) do
     t.string "position"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "balances", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "billing_cycle_id", null: false
+    t.integer "debit_cents", default: 0, null: false
+    t.string "debit_currency", default: "USD", null: false
+    t.integer "credit_cents", default: 0, null: false
+    t.string "credit_currency", default: "USD", null: false
+    t.string "title"
+    t.uuid "uid", default: -> { "gen_random_uuid()" }
+    t.string "metadata"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_balances_on_account_id"
+    t.index ["billing_cycle_id"], name: "index_balances_on_billing_cycle_id"
   end
 
   create_table "billing_cycles", force: :cascade do |t|
@@ -43,6 +59,8 @@ ActiveRecord::Schema.define(version: 2022_10_16_010049) do
     t.string "complete_price_currency", default: "USD", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "owner_id"
+    t.index ["owner_id"], name: "index_tasks_on_owner_id"
   end
 
 end

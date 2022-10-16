@@ -15,6 +15,25 @@ class TasksConsumer < ApplicationConsumer
           uid: payload['data']['public_id'],
           title: payload['data']['title']
         )
+      when ['AssignedTask', 1]
+        Task::AssignOwner.call(
+          task_id: payload['data']['uid'],
+          account_id: payload['data']['owner'],
+        )
+      when ['AssignedTask', 2]
+        Task::AssignOwner.call(
+          task_id: payload['data']['public_id'],
+          account_id: payload['data']['owner_id'],
+        )
+      when ['CompletedTask', 1]
+        Task::Complete.call(
+          task_id: payload['data']['uid'],
+        )
+      when ['CompletedTask', 2]
+        Task::Complete.call(
+          task_id: payload['data']['public_id'],
+          account_id: payload['data']['owner_id'],
+        )
       end
     end
   end
