@@ -1,3 +1,9 @@
+PATH
+  remote: ../event_schema_registry/ruby
+  specs:
+    schema_registry (1)
+      json-schema
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -60,6 +66,8 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
+    addressable (2.8.1)
+      public_suffix (>= 2.0.2, < 6.0)
     bcrypt (3.1.17)
     bindex (0.8.1)
     bootsnap (1.13.0)
@@ -130,6 +138,8 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    json-schema (3.0.0)
+      addressable (>= 2.8)
     king_konf (1.0.1)
     listen (3.7.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -149,6 +159,7 @@ GEM
       racc (~> 1.4)
     orm_adapter (0.5.0)
     pg (1.4.3)
+    public_suffix (5.0.0)
     puma (5.6.5)
       nio4r (~> 2.0)
     racc (1.6.0)
@@ -271,6 +282,7 @@ DEPENDENCIES
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.6, >= 6.1.6.1)
   sass-rails (>= 6)
+  schema_registry!
   simple_form
   slim-rails
   spring

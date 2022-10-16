@@ -1,6 +1,8 @@
 class Task::Create
   include Callable
 
+  TITLE_REGEXP = /^\[(.+)\] (- )?(.+)$/
+
   Result = Struct.new(:success?, :task)
 
   attr_reader :account, :params
@@ -11,7 +13,7 @@ class Task::Create
   end
 
   def call
-    @task = Task.new(params)
+    @task = Task.new(deserialized_params)
     @task.creator = account
     @task.owner = employee
 
@@ -28,6 +30,21 @@ class Task::Create
   end
 
   private
+
+  def deserialized_params
+    title = params[:title]
+
+    matches = title.match TITLE_REGEXP
+
+    if matches.present?
+      params.merge(
+        title: matches[3],
+        jira_id: matches[1]
+      )
+    else
+      params
+    end
+  end
 
   def employee
     @_employee ||= begin

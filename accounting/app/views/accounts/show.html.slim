@@ -1,0 +1,31 @@
+h1= "Accounting for #{@dashboard.account.display_name}- #{@dashboard.billing_cycle.title}"
+
+- if @dashboard.previous_cycle.present?
+  = link_to "Previous Billing Cycle", billing_cycle_account_path(@dashboard.previous_cycle, @dashboard.account), class: "btn btn-primary"
+
+- if @dashboard.next_cycle.present?
+  = link_to "Next Billing Cycle", billing_cycle_account_path(@dashboard.next_cycle, @dashboard.account), class: "btn btn-primary"
+
+= link_to "Back to Cyrcle", billing_cycle_path(@dashboard.billing_cycle), class: "btn btn-primary"
+
+.alert.alert-primary
+  p= "Credit: #{@dashboard.debit.format}"
+  p= "Debit: #{@dashboard.credit.format}"
+  p= "Income #{@dashboard.income.format}"
+  p= "Current Balance: #{@dashboard.current_balance.format}"
+
+h3 Audit Log 
+
+table.table
+  thead
+    tr
+      th title
+      th credit
+      th debit
+
+  tbody
+    - @dashboard.balances_data.each do |balance|
+      tr
+        td= balance.title
+        td= balance.credit.format
+        td= "-#{balance.debit.format}"

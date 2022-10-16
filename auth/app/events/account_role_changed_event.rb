@@ -21,4 +21,12 @@ class AccountRoleChangedEvent < BaseEvent
   def topic
     "accounts"
   end
+
+  def event_version
+    1
+  end
+
+  def event_schema
+    'accounts.role_changed'
+  end
 end

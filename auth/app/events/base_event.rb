@@ -2,14 +2,24 @@ class BaseEvent
   include Callable
 
   def call
-    WaterDrop::SyncProducer.call(to_json, topic: topic)
+    result = SchemaRegistry.validate_event(event, event_schema, version: event_version)
+
+    if result.success?
+      WaterDrop::SyncProducer.call(event.to_json, topic: topic)
+    else
+      byebug
+    end
   end
 
-  def to_json
-    {
+  def event
+    @_event ||= {
+      event_id: SecureRandom.uuid,
+      event_version: event_version,
       event_name: event_name,
+      event_time: Time.now.to_s,
+      producer: 'auth_service',
       data: event_data,
-    }.to_json
+    }
   end
 
   private
@@ -24,5 +34,13 @@ class BaseEvent
 
   def topic
     raise "Not Implemented"
+  end
+
+  def event_version
+    raise 'Not Implemented'
+  end
+
+  def event_schema
+    raise 'Not Implemented'
   end
 end

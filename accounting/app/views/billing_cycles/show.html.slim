@@ -1,0 +1,37 @@
+h1= "Accounting - #{dashboard.billing_cycle.title}"
+
+- if dashboard.previous_cycle.present?
+  = link_to "Previous Billing Cycle", billing_cycle_path(dashboard.previous_cycle), class: "btn btn-primary"
+
+- if dashboard.next_cycle.present?
+  = link_to "Next Billing Cycle", billing_cycle_path(dashboard.next_cycle), class: "btn btn-primary"
+
+- if admin? && dashboard.billing_cycle.active?
+  = link_to "Make payments", finish_billing_cycles_path, method: :post, class: "btn btn-success"
+
+.alert.alert-primary
+  p= "Credit: #{dashboard.debit.format}"
+  p= "Debit: #{dashboard.credit.format}"
+  p= "Income #{dashboard.income.format}"
+
+h3 Accounts 
+
+table.table
+  thead
+    tr
+      th id
+      th email
+      th full_name
+      th position
+      th income
+      th 
+
+  tbody
+    - dashboard.accounts_info.each do |account_info|
+      tr
+        td= account_info.account.uid
+        td= account_info.account.email
+        td= account_info.account.full_name
+        td= account_info.account.position
+        td= account_info.income.format
+        td= link_to "Show Audit Logs", billing_cycle_account_path(account_info.billing_cycle, account_info.account)

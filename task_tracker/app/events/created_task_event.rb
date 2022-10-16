@@ -9,8 +9,9 @@ class CreatedTaskEvent < BaseEvent
 
   def event_data
     {
-      uid: task.uid,
+      public_id: task.uid,
       title: task.title,
+      jira_id: task.jira_id,
     }
   end
 
@@ -20,5 +21,13 @@ class CreatedTaskEvent < BaseEvent
 
   def topic
     "tasks-stream"
+  end
+
+  def event_version
+    3
+  end
+
+  def event_schema
+    'tasks.created'
   end
 end

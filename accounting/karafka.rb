@@ -17,11 +17,20 @@ class KarafkaApp < Karafka::App
   # Karafka.monitor.subscribe(Karafka::Instrumentation::ProctitleListener.new)
 
   routes.draw do
-    # Uncomment this if you use Karafka with ActiveJob
-    # You ned to define the topic per each queue name you use
-    # active_job_topic :default
-    topic :example do
-      consumer ExampleConsumer
+    topic :'tasks-stream' do
+      consumer TasksConsumer
+    end
+
+    topic :'tasks' do
+      consumer TasksConsumer
+    end
+
+    topic :'accounts' do
+      consumer AccountsConsumer
+    end
+
+    topic :'accounts-stream' do
+      consumer AccountsConsumer
     end
   end
 end

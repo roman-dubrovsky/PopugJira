@@ -54,3 +54,4 @@ gem 'devise-bootstrap-views', '~> 1.0'
 gem 'simple_form'
 
 gem "waterdrop", '~> 1.4.0'
+gem 'schema_registry', path: '../event_schema_registry/ruby'

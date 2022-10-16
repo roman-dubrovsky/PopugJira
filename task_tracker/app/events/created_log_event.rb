@@ -9,11 +9,12 @@ class CreatedLogEvent < BaseEvent
 
   def event_data
     {
-      uid: log.public_id,
-      task: log.task.uid,
-      actor: log.actor&.uid,
-      owner: log.owner.uid,
+      public_id: log.public_id,
+      task_id: log.task.uid,
+      actor_id: log.actor&.uid,
+      owner_id: log.owner.uid,
       event: log.event,
+      time: log.created_at.to_s,
     }
   end
 
@@ -23,5 +24,13 @@ class CreatedLogEvent < BaseEvent
 
   def topic
     "task_logs-stream"
+  end
+
+  def event_version
+    2
+  end
+
+  def event_schema
+    'task_logs.created'
   end
 end

@@ -11,6 +11,35 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container">
+      <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Accounting</a>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <% if current_account.present? %>
+                <li class="nav-item">
+                  <a class="nav-link disabled"><%= "Hello, #{current_account.display_name}" %></a>
+                </li>
+                <li class="nav-item">
+                  <%= link_to "Log Out", logout_path, class: "nav-link" %>
+                </li>
+              <% else %>
+                <li class="nav-item">
+                  <%= link_to "Log In", login_path, class: "nav-link" %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    
+      <div class="row">
+        <div class="col-12">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
