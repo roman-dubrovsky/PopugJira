@@ -6,6 +6,9 @@ h1= "Accounting - #{dashboard.billing_cycle.title}"
 - if dashboard.next_cycle.present?
   = link_to "Next Billing Cycle", billing_cycle_path(dashboard.next_cycle), class: "btn btn-primary"
 
+- if admin? && dashboard.billing_cycle.active?
+  = link_to "Make payments", finish_billing_cycles_path, method: :post, class: "btn btn-success"
+
 .alert.alert-primary
   p= "Credit: #{dashboard.debit.format}"
   p= "Debit: #{dashboard.credit.format}"

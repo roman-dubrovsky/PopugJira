@@ -17,6 +17,7 @@ class Task::AssignOwner
         billing_cycle: BillingCycle.active,
         debit: task.assign_price,
         title: title,
+        source: :task,
         metadata: {task_id: task.uid}.to_json
       )
       CreatedBalanceEvent.call(balance.reload)
