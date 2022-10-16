@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_16_021047) do
+ActiveRecord::Schema.define(version: 2022_10_16_040826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2022_10_16_021047) do
     t.string "metadata"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "source"
     t.index ["account_id"], name: "index_balances_on_account_id"
     t.index ["billing_cycle_id"], name: "index_balances_on_billing_cycle_id"
   end
