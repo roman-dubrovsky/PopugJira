@@ -9,8 +9,8 @@ class Task::Create
   end
 
   def call
-    task.title = title
     Task::VerifyPrices.call(task)
+    task.title = title
     task.save
   end
 

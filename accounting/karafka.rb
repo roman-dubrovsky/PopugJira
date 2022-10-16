@@ -21,6 +21,10 @@ class KarafkaApp < Karafka::App
       consumer TasksConsumer
     end
 
+    topic :'tasks' do
+      consumer TasksConsumer
+    end
+
     topic :'accounts' do
       consumer AccountsConsumer
     end

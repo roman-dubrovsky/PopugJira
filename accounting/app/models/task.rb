@@ -7,5 +7,5 @@ class Task < ApplicationRecord
     greater_than: 0,
   }
 
-  belongs_to :owner, class_name: "Account"
+  belongs_to :owner, class_name: "Account", optional: true
 end
