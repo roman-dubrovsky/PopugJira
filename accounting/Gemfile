@@ -56,3 +56,4 @@ gem 'simple_form'
 gem 'schema_registry', path: '../event_schema_registry/ruby'
 
 gem 'money-rails'
+gem 'enumerize'

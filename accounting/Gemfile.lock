@@ -75,6 +75,8 @@ GEM
     byebug (11.1.3)
     concurrent-ruby (1.1.10)
     crass (1.0.6)
+    enumerize (2.5.0)
+      activesupport (>= 3.2)
     erubi (1.11.0)
     faraday (2.6.0)
       faraday-net_http (>= 2.0, < 3.1)
@@ -259,6 +261,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (>= 1.4.4)
   byebug
+  enumerize
   jbuilder (~> 2.7)
   karafka
   listen (~> 3.3)
