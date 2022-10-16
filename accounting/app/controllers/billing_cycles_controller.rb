@@ -10,6 +10,11 @@ class BillingCyclesController < ApplicationController
     render :show
   end
 
+  def finish
+    BillingCycle::Finish.call
+    redirect_to root_path
+  end
+
   private
 
   def dashboard

@@ -25,6 +25,6 @@ class BillingCycle::ShortAccountDataForDashboard
   end
 
   def task_balances
-    balances.where(source: :task)
+    balances.where(source: [:task, :debt])
   end
 end

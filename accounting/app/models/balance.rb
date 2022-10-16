@@ -7,7 +7,7 @@ class Balance < ApplicationRecord
   monetize :credit_cents
   monetize :debit_cents
 
-  enumerize :source, in: [:task]
+  enumerize :source, in: [:task, :accounting, :debt]
 
   def additional_data
     metadata.present? ? JSON.parse(metadata) : {}

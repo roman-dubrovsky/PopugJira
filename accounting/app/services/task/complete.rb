@@ -17,7 +17,8 @@ class Task::Complete
         billing_cycle: BillingCycle.active,
         credit: task.complete_price,
         title: title,
-        metadata: {task_id: task.uid}.to_json
+        metadata: {task_id: task.uid}.to_json,
+        source: :task
       )
       CreatedBalanceEvent.call(balance.reload)
     end

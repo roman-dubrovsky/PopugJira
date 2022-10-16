@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :billing_cycles, only: [:show] do
     collection do
       get :current
+      post :finish
     end
 
     resources :accounts, only: [:show]
