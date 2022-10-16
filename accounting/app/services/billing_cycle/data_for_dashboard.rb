@@ -1,8 +1,9 @@
 class BillingCycle::DataForDashboard
-  attr_reader :billing_cycle
+  attr_reader :billing_cycle, :account_id
 
-  def initialize(billing_cycle)
+  def initialize(billing_cycle:, account_id:)
     @billing_cycle = billing_cycle
+    @account_id = account_id
   end
 
   def credit
@@ -40,6 +41,8 @@ class BillingCycle::DataForDashboard
   end
 
   def accounts
-    Account.all
+    scope = Account.galera_employee
+    scope.where(id: account_id) if account_id.present?
+    scope
   end
 end

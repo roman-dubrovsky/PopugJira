@@ -9,4 +9,8 @@ Rails.application.routes.draw do
 
     resources :accounts, only: [:show]
   end
+
+  get 'auth/:provider/callback', to: 'sessions#create'
+  get '/login', to: 'sessions#new'
+  get '/logout', to: 'sessions#destroy'
 end

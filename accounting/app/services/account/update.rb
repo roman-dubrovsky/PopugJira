@@ -11,5 +11,6 @@ class Account::Update
   def call
     account = Account::FindByUid.call(uid)
     account.update(params)
+    return account
   end
 end

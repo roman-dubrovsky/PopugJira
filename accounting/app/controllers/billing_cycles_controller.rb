@@ -13,6 +13,9 @@ class BillingCyclesController < ApplicationController
   private
 
   def dashboard
-    @_dashboard ||= BillingCycle::DataForDashboard.new(@billing_cycle)
+    @_dashboard ||= BillingCycle::DataForDashboard.new(
+      billing_cycle: @billing_cycle,
+      account_id: admin? ? nil : current_account.id
+    )
   end
 end
