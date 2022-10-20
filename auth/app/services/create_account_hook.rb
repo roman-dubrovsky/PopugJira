@@ -1,6 +1,6 @@
 class CreateAccountHook
   include Callable
-  
+
   attr_reader :account
 
   def initialize(account)

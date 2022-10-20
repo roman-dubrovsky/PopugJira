@@ -1,22 +1,26 @@
-class Task::Create
-  include Callable
+# frozen_string_literal: true
 
-  attr_reader :uid, :title
+module Task
+  class Create
+    include Callable
 
-  def initialize(uid:, title:)
-    @uid = uid
-    @title = title
-  end
+    attr_reader :uid, :title
 
-  def call
-    Task::VerifyPrices.call(task)
-    task.title = title
-    task.save
-  end
+    def initialize(uid:, title:)
+      @uid = uid
+      @title = title
+    end
 
-  private
+    def call
+      Task::VerifyPrices.call(task)
+      task.title = title
+      task.save
+    end
 
-  def task 
-    @_task ||= Task.find_or_initialize_by(uid: uid)
+    private
+
+    def task
+      @_task ||= Task.find_or_initialize_by(uid: uid)
+    end
   end
 end

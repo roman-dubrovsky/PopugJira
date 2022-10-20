@@ -8,16 +8,14 @@ class UpdateAccount
   def initialize(account:, params:)
     @account = account
     @params = params
-    @new_role = params[:role] != account.role ? params[:role] : nil
+    @new_role = params[:role] == account.role ? nil : params[:role]
   end
 
   def call
     if account.update(params)
       AccountUpdatedEvent.call(account)
 
-      if new_role.present?
-        AccountRoleChangedEvent.call(account)
-      end
+      AccountRoleChangedEvent.call(account) if new_role.present?
 
       Result.new(true, account)
     else

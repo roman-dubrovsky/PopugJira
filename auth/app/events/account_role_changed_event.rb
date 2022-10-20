@@ -27,6 +27,6 @@ class AccountRoleChangedEvent < BaseEvent
   end
 
   def event_schema
-    'accounts.role_changed'
+    "accounts.role_changed"
   end
 end

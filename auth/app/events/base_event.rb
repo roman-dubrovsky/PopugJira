@@ -16,8 +16,8 @@ class BaseEvent
       event_id: SecureRandom.uuid,
       event_version: event_version,
       event_name: event_name,
-      event_time: Time.now.to_s,
-      producer: 'auth_service',
+      event_time: Time.zone.now.to_s,
+      producer: "auth_service",
       data: event_data,
     }
   end
@@ -37,10 +37,10 @@ class BaseEvent
   end
 
   def event_version
-    raise 'Not Implemented'
+    raise "Not Implemented"
   end
 
   def event_schema
-    raise 'Not Implemented'
+    raise "Not Implemented"
   end
 end

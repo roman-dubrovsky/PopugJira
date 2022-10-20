@@ -1,16 +1,20 @@
-class Account::Update
-  include Callable
+# frozen_string_literal: true
 
-  attr_reader :uid, :params
+module Account
+  class Update
+    include Callable
 
-  def initialize(uid:, params:)
-    @uid = uid
-    @params = params
-  end
+    attr_reader :uid, :params
 
-  def call
-    account = Account::FindByUid.call(uid)
-    account.update(params)
-    return account
+    def initialize(uid:, params:)
+      @uid = uid
+      @params = params
+    end
+
+    def call
+      account = Account::FindByUid.call(uid)
+      account.update(params)
+      account
+    end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateBalances < ActiveRecord::Migration[6.1]
   def change
     create_table :balances do |t|
@@ -6,7 +8,7 @@ class CreateBalances < ActiveRecord::Migration[6.1]
       t.monetize :debit
       t.monetize :credit
       t.string :title
-      t.uuid :uid, default: "gen_random_uuid()"
+      t.uuid :uid, default: 'gen_random_uuid()'
       t.string :metadata
 
       t.timestamps

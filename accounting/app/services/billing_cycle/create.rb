@@ -1,30 +1,34 @@
-class BillingCycle::Create
-  include Callable
+# frozen_string_literal: true
 
-  def call
-    cycle = BillingCycle.create(
-      title: title,
-      date: date,
-    )
-    CreatedBillingCycleEvent.call(cycle.reload)
-    return cycle
-  end
+module BillingCycle
+  class Create
+    include Callable
 
-  private
-
-  def title
-    if cycles_for_date.zero?
-      date.to_s
-    else
-      "#{date.to_s} - #{cycles_for_date + 1}"
+    def call
+      cycle = BillingCycle.create(
+        title: title,
+        date: date
+      )
+      CreatedBillingCycleEvent.call(cycle.reload)
+      cycle
     end
-  end
 
-  def cycles_for_date
-    @_cycles_for_date ||= BillingCycle.where(date: date).count
-  end
+    private
 
-  def date
-    @_date ||= Date.today
+    def title
+      if cycles_for_date.zero?
+        date.to_s
+      else
+        "#{date} - #{cycles_for_date + 1}"
+      end
+    end
+
+    def cycles_for_date
+      @_cycles_for_date ||= BillingCycle.where(date: date).count
+    end
+
+    def date
+      @_date ||= Time.zone.today
+    end
   end
 end

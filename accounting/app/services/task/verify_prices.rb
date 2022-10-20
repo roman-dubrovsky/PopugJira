@@ -1,29 +1,33 @@
-class Task::VerifyPrices
-  include Callable
+# frozen_string_literal: true
 
-  attr_reader :task
+module Task
+  class VerifyPrices
+    include Callable
 
-  def initialize(task)
-    @task = task
-  end
+    attr_reader :task
 
-  def call
-    return task if !task.assign_price.zero? && !task.complete_price.zero?
+    def initialize(task)
+      @task = task
+    end
 
-    task.title ||= "Undefined"
-    task.assign_price = generate_assign_price if task.assign_price.zero?
-    task.complete_price = generate_complete_price if task.complete_price.zero?
-    task.save
-    task
-  end
+    def call
+      return task if !task.assign_price.zero? && !task.complete_price.zero?
 
-  private
+      task.title ||= "Undefined"
+      task.assign_price = generate_assign_price if task.assign_price.zero?
+      task.complete_price = generate_complete_price if task.complete_price.zero?
+      task.save
+      task
+    end
 
-  def generate_assign_price
-    rand(10..20)
-  end
+    private
 
-  def generate_complete_price
-    rand(20..40)
+    def generate_assign_price
+      rand(10..20)
+    end
+
+    def generate_complete_price
+      rand(20..40)
+    end
   end
 end

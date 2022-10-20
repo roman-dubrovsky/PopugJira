@@ -9,7 +9,7 @@ class AccountsController < ApplicationController
   # GET /accounts/current.json
   def current
     respond_to do |format|
-      format.json  { render :json => current_oauth_account }
+      format.json { render json: current_oauth_account }
     end
   end
 

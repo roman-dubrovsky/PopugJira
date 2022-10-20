@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreatedBillingCycleEvent < BaseEvent
   attr_reader :billing_cycle
 
@@ -28,6 +30,6 @@ class CreatedBillingCycleEvent < BaseEvent
   end
 
   def event_schema
-    'billing_cycles.created'
+    "billing_cycles.created"
   end
 end

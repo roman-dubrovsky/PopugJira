@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   helper_method :current_account, :admin?
 
@@ -6,7 +8,7 @@ class ApplicationController < ActionController::Base
   private
 
   def authenticate_account!
-    redirect_to login_path unless current_account.present?
+    redirect_to login_path if current_account.blank?
   end
 
   def autorize_admin!
@@ -18,7 +20,6 @@ class ApplicationController < ActionController::Base
   end
 
   def admin?
-    current_account.role == "admin" || current_account.role == "accounting_clerk" || current_account.role == 'manager'
+    current_account.role == "admin" || current_account.role == "accounting_clerk" || current_account.role == "manager"
   end
 end
- 

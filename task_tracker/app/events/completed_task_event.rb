@@ -29,6 +29,6 @@ class CompletedTaskEvent < BaseEvent
   end
 
   def event_schema
-    'tasks.completed'
+    "tasks.completed"
   end
 end

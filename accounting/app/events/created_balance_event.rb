@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreatedBalanceEvent < BaseEvent
   attr_reader :balance
 
@@ -16,7 +18,7 @@ class CreatedBalanceEvent < BaseEvent
       billing_cycle_id: balance.billing_cycle.uid,
       debit_cents: balance.debit_cents,
       credit_cents: balance.credit_cents,
-      task_id: balance.additional_data["task_id"]
+      task_id: balance.additional_data["task_id"],
     }
   end
 
@@ -33,6 +35,6 @@ class CreatedBalanceEvent < BaseEvent
   end
 
   def event_schema
-    'balances.created'
+    "balances.created"
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Popugs don't use mails and read logs instead
 class SummaryMailer
   include Callable

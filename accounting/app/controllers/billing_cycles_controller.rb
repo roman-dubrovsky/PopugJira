@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BillingCyclesController < ApplicationController
   helper_method :dashboard
 

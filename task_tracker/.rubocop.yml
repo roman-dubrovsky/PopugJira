@@ -1,0 +1,29 @@
+inherit_gem:
+  datarockets-style:
+    - config/rails.yml
+
+Metrics/MethodLength:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Lint/MissingSuper:
+  Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Rails/InverseOf:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'app/consumers/account_changes.rb'
+
+Naming/MemoizedInstanceVariableName:
+  Exclude: 
+    - 'lib/omniauth/keepa.rb'

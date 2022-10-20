@@ -28,6 +28,6 @@ class CreatedTaskEvent < BaseEvent
   end
 
   def event_schema
-    'tasks.created'
+    "tasks.created"
   end
 end

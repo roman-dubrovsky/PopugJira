@@ -29,6 +29,6 @@ class AssignedTaskEvent < BaseEvent
   end
 
   def event_schema
-    'tasks.assigned'
+    "tasks.assigned"
   end
 end

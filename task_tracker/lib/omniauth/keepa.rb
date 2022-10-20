@@ -1,4 +1,4 @@
-require 'omniauth-oauth2'
+require "omniauth-oauth2"
 
 module OmniAuth
   module Strategies
@@ -6,24 +6,24 @@ module OmniAuth
       option :name, :keepa
 
       option :client_options, {
-          :site => "http://localhost:3000",
-          :authorize_url => "http://localhost:3000/oauth/authorize"
+        site: "http://localhost:3000",
+          authorize_url: "http://localhost:3000/oauth/authorize",
       }
 
       uid { raw_info["public_id"] }
 
       info do
         {
-            :email => raw_info["email"],
-            :full_name => raw_info["full_name"],
-            :position => raw_info["position"],
-            :role => raw_info["role"],
-            :public_id => raw_info["public_id"]
+          email: raw_info["email"],
+          full_name: raw_info["full_name"],
+          position: raw_info["position"],
+          role: raw_info["role"],
+          public_id: raw_info["public_id"],
         }
       end
 
       def raw_info
-        @raw_info ||= access_token.get('/accounts/current').parsed
+        @raw_info ||= access_token.get("/accounts/current").parsed
       end
     end
   end

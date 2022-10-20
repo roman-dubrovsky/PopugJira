@@ -1,71 +1,75 @@
-class BillingCycle::Finish
-  include Callable
+# frozen_string_literal: true
 
-  def initialize
-    @payments = []
-  end
+module BillingCycle
+  class Finish
+    include Callable
 
-  def call
-    BillingCycle.transaction do
-      billing_cycle.update(active: false)
-      new_billing_cycle = BillingCycle.active
+    def initialize
+      @payments = []
+    end
 
-      Account.galera_employee.find_each do |account|
-        credit = Money.new(account.balances.where(billing_cycle: billing_cycle).sum(:credit_cents))
-        debit = Money.new(account.balances.where(billing_cycle: billing_cycle).sum(:debit_cents))
-        income = credit - debit
+    def call
+      BillingCycle.transaction do
+        billing_cycle.update(active: false)
+        new_billing_cycle = BillingCycle.active
 
-        SummaryMailer.call(account: account, billing_cycle: billing_cycle, income: income)
+        Account.galera_employee.find_each do |account|
+          credit = Money.new(account.balances.where(billing_cycle: billing_cycle).sum(:credit_cents))
+          debit = Money.new(account.balances.where(billing_cycle: billing_cycle).sum(:debit_cents))
+          income = credit - debit
 
-        if income.positive?
-          process_payment(account, income)
-        elsif income.negative?
-          income *= -1
-          process_debt(account, income, new_billing_cycle)
+          SummaryMailer.call(account: account, billing_cycle: billing_cycle, income: income)
+
+          if income.positive?
+            process_payment(account, income)
+          elsif income.negative?
+            income *= -1
+            process_debt(account, income, new_billing_cycle)
+          end
         end
+      end
+
+      # Simulate running payments in BJ
+      @payments.each do |account, income|
+        Payment.new(account, income).call_async
       end
     end
 
-    # Simulate running payments in BJ
-    @payments.each do |account, income|
-      Payment.new(account, income).call_async
+    private
+
+    def process_payment(account, income)
+      payment_balance = Balance.create(
+        account: account,
+        billing_cycle: billing_cycle,
+        debit: income,
+        title: "Pay income",
+        source: :accounting
+      )
+      CreatedBalanceEvent.call(payment_balance.reload)
+      @payments << [account, income]
     end
-  end
 
-  private
+    def process_debt(account, income, new_billing_cycle)
+      close_dept_balance = Balance.create(
+        account: account,
+        billing_cycle: billing_cycle,
+        credit: income,
+        title: "Close billing cycle",
+        source: :accounting
+      )
+      move_dept_balance = Balance.create(
+        account: account,
+        billing_cycle: new_billing_cycle,
+        debit: income,
+        title: "Debt from previous billing cycle",
+        source: :debt
+      )
+      CreatedBalanceEvent.call(close_dept_balance.reload)
+      CreatedBalanceEvent.call(move_dept_balance.reload)
+    end
 
-  def process_payment(account, income)
-    payment_balance = Balance.create(
-      account: account,
-      billing_cycle: billing_cycle,
-      debit: income,
-      title: "Pay income",
-      source: :accounting
-    )
-    CreatedBalanceEvent.call(payment_balance.reload)
-    @payments << [account, income]
-  end
-
-  def process_debt(account, income, new_billing_cycle)
-    close_dept_balance = Balance.create(
-      account: account,
-      billing_cycle: billing_cycle,
-      credit: income,
-      title: "Close billing cycle",
-      source: :accounting
-    )
-    move_dept_balance = Balance.create(
-      account: account,
-      billing_cycle: new_billing_cycle,
-      debit: income,
-      title: "Debt from previous billing cycle",
-      source: :debt
-    )
-    CreatedBalanceEvent.call(close_dept_balance.reload)
-    CreatedBalanceEvent.call(move_dept_balance.reload)
-  end
-
-  def billing_cycle
-    @_billing_cycle ||= BillingCycle.active
+    def billing_cycle
+      @_billing_cycle ||= BillingCycle.active
+    end
   end
 end

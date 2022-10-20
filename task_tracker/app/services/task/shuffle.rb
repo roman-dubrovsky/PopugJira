@@ -1,30 +1,32 @@
-class Task::Shuffle
-  include Callable
+module Task
+  class Shuffle
+    include Callable
 
-  attr_reader :account
+    attr_reader :account
 
-  def initialize(account:)
-    @account = account
-  end
-
-  def call
-    tasks.find_each do |task|
-      employee = get_random_employee
-      task.update(owner: employee)
-      log = task.task_state_logs.create(actor: account, owner: employee, event: "Task Assigned")
-      AssignedTaskEvent.call(task, log)
-      CreatedLogEvent.call(log)
+    def initialize(account:)
+      @account = account
     end
-  end
 
-  private
+    def call
+      tasks.find_each do |task|
+        employee = random_employee
+        task.update(owner: employee)
+        log = task.task_state_logs.create(actor: account, owner: employee, event: "Task Assigned")
+        AssignedTaskEvent.call(task, log)
+        CreatedLogEvent.call(log)
+      end
+    end
 
-  def tasks
-    Task.where(active: true)
-  end
+    private
 
-  def get_random_employee
-    count = Account.employees.count
-    Account.employees.offset(rand(count)).first
+    def tasks
+      Task.where(active: true)
+    end
+
+    def random_employee
+      count = Account.employees.count
+      Account.employees.offset(rand(count)).first
+    end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,58 +12,56 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_16_040826) do
-
+ActiveRecord::Schema.define(version: 20_221_016_040_826) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "accounts", force: :cascade do |t|
-    t.uuid "uid"
-    t.string "email"
-    t.string "full_name"
-    t.string "role"
-    t.string "position"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table 'accounts', force: :cascade do |t|
+    t.uuid 'uid'
+    t.string 'email'
+    t.string 'full_name'
+    t.string 'role'
+    t.string 'position'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
   end
 
-  create_table "balances", force: :cascade do |t|
-    t.bigint "account_id", null: false
-    t.bigint "billing_cycle_id", null: false
-    t.integer "debit_cents", default: 0, null: false
-    t.string "debit_currency", default: "USD", null: false
-    t.integer "credit_cents", default: 0, null: false
-    t.string "credit_currency", default: "USD", null: false
-    t.string "title"
-    t.uuid "uid", default: -> { "gen_random_uuid()" }
-    t.string "metadata"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "source"
-    t.index ["account_id"], name: "index_balances_on_account_id"
-    t.index ["billing_cycle_id"], name: "index_balances_on_billing_cycle_id"
+  create_table 'balances', force: :cascade do |t|
+    t.bigint 'account_id', null: false
+    t.bigint 'billing_cycle_id', null: false
+    t.integer 'debit_cents', default: 0, null: false
+    t.string 'debit_currency', default: 'USD', null: false
+    t.integer 'credit_cents', default: 0, null: false
+    t.string 'credit_currency', default: 'USD', null: false
+    t.string 'title'
+    t.uuid 'uid', default: -> { 'gen_random_uuid()' }
+    t.string 'metadata'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.string 'source'
+    t.index ['account_id'], name: 'index_balances_on_account_id'
+    t.index ['billing_cycle_id'], name: 'index_balances_on_billing_cycle_id'
   end
 
-  create_table "billing_cycles", force: :cascade do |t|
-    t.uuid "uid", default: -> { "gen_random_uuid()" }
-    t.date "date"
-    t.string "title"
-    t.boolean "active", default: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table 'billing_cycles', force: :cascade do |t|
+    t.uuid 'uid', default: -> { 'gen_random_uuid()' }
+    t.date 'date'
+    t.string 'title'
+    t.boolean 'active', default: true
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
   end
 
-  create_table "tasks", force: :cascade do |t|
-    t.uuid "uid"
-    t.string "title"
-    t.integer "assign_price_cents", default: 0, null: false
-    t.string "assign_price_currency", default: "USD", null: false
-    t.integer "complete_price_cents", default: 0, null: false
-    t.string "complete_price_currency", default: "USD", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "owner_id"
-    t.index ["owner_id"], name: "index_tasks_on_owner_id"
+  create_table 'tasks', force: :cascade do |t|
+    t.uuid 'uid'
+    t.string 'title'
+    t.integer 'assign_price_cents', default: 0, null: false
+    t.string 'assign_price_currency', default: 'USD', null: false
+    t.integer 'complete_price_cents', default: 0, null: false
+    t.string 'complete_price_currency', default: 'USD', null: false
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.bigint 'owner_id'
+    t.index ['owner_id'], name: 'index_tasks_on_owner_id'
   end
-
 end

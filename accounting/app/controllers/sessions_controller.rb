@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SessionsController < ApplicationController
   skip_before_action :authenticate_account!
 
@@ -5,10 +7,10 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user_info = request.env['omniauth.auth']
+    user_info = request.env["omniauth.auth"]
     account = Account::Update.call(
       uid: user_info.uid,
-      params: user_info.info.to_h.slice('email', 'full_name', 'position', 'role')
+      params: user_info.info.to_h.slice("email", "full_name", "position", "role")
     )
 
     session[:account] = account.uid

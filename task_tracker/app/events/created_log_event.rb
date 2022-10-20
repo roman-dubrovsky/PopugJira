@@ -31,6 +31,6 @@ class CreatedLogEvent < BaseEvent
   end
 
   def event_schema
-    'task_logs.created'
+    "task_logs.created"
   end
 end

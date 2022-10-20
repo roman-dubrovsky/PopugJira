@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AccountsController < ApplicationController
   def show
     @billing_cycle = BillingCycle.find(params[:billing_cycle_id])

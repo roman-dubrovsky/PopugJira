@@ -1,30 +1,34 @@
-class BillingCycle::ShortAccountDataForDashboard
-  attr_reader :billing_cycle, :account
+# frozen_string_literal: true
 
-  def initialize(billing_cycle:, account:)
-    @billing_cycle = billing_cycle
-    @account = account
-  end
+module BillingCycle
+  class ShortAccountDataForDashboard
+    attr_reader :billing_cycle, :account
 
-  def income
-    @_income ||= credit - debit
-  end
+    def initialize(billing_cycle:, account:)
+      @billing_cycle = billing_cycle
+      @account = account
+    end
 
-  def credit
-    @_credit ||= Money.new(task_balances.sum(:credit_cents))
-  end
+    def income
+      @_income ||= credit - debit
+    end
 
-  def debit
-    @_debit ||= Money.new(task_balances.sum(:debit_cents))
-  end
+    def credit
+      @_credit ||= Money.new(task_balances.sum(:credit_cents))
+    end
 
-  private
+    def debit
+      @_debit ||= Money.new(task_balances.sum(:debit_cents))
+    end
 
-  def balances
-    account.balances.where(billing_cycle: billing_cycle)
-  end
+    private
 
-  def task_balances
-    balances.where(source: [:task, :debt])
+    def balances
+      account.balances.where(billing_cycle: billing_cycle)
+    end
+
+    def task_balances
+      balances.where(source: %i[task debt])
+    end
   end
 end

@@ -10,6 +10,6 @@ class AccountCreatedEvent < AccountCudEvent
   end
 
   def event_schema
-    'accounts.created'
+    "accounts.created"
   end
 end

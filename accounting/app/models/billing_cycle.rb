@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BillingCycle < ApplicationRecord
   validates :title, :date, presence: true
 

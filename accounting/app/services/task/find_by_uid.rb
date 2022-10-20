@@ -1,14 +1,18 @@
-class Task::FindByUid
-  include Callable
+# frozen_string_literal: true
 
-  attr_reader :uid
+module Task
+  class FindByUid
+    include Callable
 
-  def initialize(uid)
-    @uid = uid
-  end
+    attr_reader :uid
 
-  def call
-    task = Task.find_by(uid: uid) || Task.new(uid: uid)
-    Task::VerifyPrices.call(task)
+    def initialize(uid)
+      @uid = uid
+    end
+
+    def call
+      task = Task.find_by(uid: uid) || Task.new(uid: uid)
+      Task::VerifyPrices.call(task)
+    end
   end
 end

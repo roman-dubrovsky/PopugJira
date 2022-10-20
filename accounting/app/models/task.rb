@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Task < ApplicationRecord
   monetize :assign_price_cents
   monetize :complete_price_cents

@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   private
 
   def authenticate_account!
-    redirect_to login_path unless current_account.present?
+    redirect_to login_path if current_account.blank?
   end
 
   def autorize_admin!

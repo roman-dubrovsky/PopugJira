@@ -1,0 +1,32 @@
+inherit_gem:
+  datarockets-style:
+    - config/rails.yml
+
+Metrics/MethodLength:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  Exclude:
+    - 'app/services/billing_cycle/data_for_dashboard.rb'
+    - 'app/services/billing_cycle/account_data_for_dashboard.rb'
+    - 'lib/omniauth/keepa.rb'
+
+Metrics/AbcSize:
+  Enabled: false
+
+Lint/MissingSuper:
+  Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'app/consumers/tasks_consumer.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'app/consumers/tasks_consumer.rb'

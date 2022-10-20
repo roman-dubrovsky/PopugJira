@@ -2,8 +2,8 @@
 
 class KarafkaApp < Karafka::App
   setup do |config|
-    config.kafka = { 'bootstrap.servers': '127.0.0.1:9092' }
-    config.client_id = 'TaskTracker'
+    config.kafka = {"bootstrap.servers": "127.0.0.1:9092"}
+    config.client_id = "TaskTracker"
     # Recreate consumers with each batch. This will allow Rails code reload to work in the
     # development mode. Otherwise Karafka process would not be aware of code changes
     config.consumer_persistence = !Rails.env.development?
@@ -17,11 +17,11 @@ class KarafkaApp < Karafka::App
   # Karafka.monitor.subscribe(Karafka::Instrumentation::ProctitleListener.new)
 
   routes.draw do
-    topic :'accounts-stream' do
+    topic :"accounts-stream" do
       consumer AccountChanges
     end
 
-    topic :'accounts' do
+    topic :accounts do
       consumer AccountChanges
     end
   end

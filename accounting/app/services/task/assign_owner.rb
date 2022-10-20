@@ -1,40 +1,44 @@
-class Task::AssignOwner
-  include Callable
+# frozen_string_literal: true
 
-  attr_reader :task_id, :account_id
+module Task
+  class AssignOwner
+    include Callable
 
-  def initialize(task_id:, account_id:)
-    @task_id = task_id
-    @account_id = account_id
-  end
+    attr_reader :task_id, :account_id
 
-  def call
-    Balance.transaction do
-      task.update(owner: account)
-
-      balance = Balance.create(
-        account: account,
-        billing_cycle: BillingCycle.active,
-        debit: task.assign_price,
-        title: title,
-        source: :task,
-        metadata: {task_id: task.uid}.to_json
-      )
-      CreatedBalanceEvent.call(balance.reload)
+    def initialize(task_id:, account_id:)
+      @task_id = task_id
+      @account_id = account_id
     end
-  end
 
-  private
+    def call
+      Balance.transaction do
+        task.update(owner: account)
 
-  def task 
-    @_task ||= Task::FindByUid.call(task_id)
-  end
+        balance = Balance.create(
+          account: account,
+          billing_cycle: BillingCycle.active,
+          debit: task.assign_price,
+          title: title,
+          source: :task,
+          metadata: {task_id: task.uid}.to_json
+        )
+        CreatedBalanceEvent.call(balance.reload)
+      end
+    end
 
-  def account 
-    @_account ||= Account::FindByUid.call(account_id)
-  end
+    private
 
-  def title
-    "Assign task #{task.uid} - #{task.title}"
+    def task
+      @_task ||= Task::FindByUid.call(task_id)
+    end
+
+    def account
+      @_account ||= Account::FindByUid.call(account_id)
+    end
+
+    def title
+      "Assign task #{task.uid} - #{task.title}"
+    end
   end
 end

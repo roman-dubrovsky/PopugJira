@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user_info = request.env['omniauth.auth']
+    user_info = request.env["omniauth.auth"]
     result = Account::FindOrCreate.call(uid: user_info.uid, params: user_info.info.to_h)
     if result.success?
       session[:account] = result.account.uid
