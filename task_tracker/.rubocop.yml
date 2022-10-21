@@ -27,3 +27,8 @@ Metrics/CyclomaticComplexity:
 Naming/MemoizedInstanceVariableName:
   Exclude: 
     - 'lib/omniauth/keepa.rb'
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+  Include:
+    - "app/**/*"

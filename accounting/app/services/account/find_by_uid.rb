@@ -1,20 +1,18 @@
 # frozen_string_literal: true
 
-module Account
-  class FindByUid
-    include Callable
+class Account::FindByUid
+  include Callable
 
-    attr_reader :uid
+  attr_reader :uid
 
-    def initialize(uid)
-      @uid = uid
-    end
+  def initialize(uid)
+    @uid = uid
+  end
 
-    def call
-      account = Account.find_by(uid: uid)
-      return account if account.present?
+  def call
+    account = Account.find_by(uid: uid)
+    return account if account.present?
 
-      Account.create(uid: uid, role: :employee)
-    end
+    Account.create(uid: uid, role: :employee)
   end
 end

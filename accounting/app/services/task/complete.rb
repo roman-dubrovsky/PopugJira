@@ -1,44 +1,42 @@
 # frozen_string_literal: true
 
-module Task
-  class Complete
-    include Callable
+class Task::Complete
+  include Callable
 
-    attr_reader :task_id, :account_id
+  attr_reader :task_id, :account_id
 
-    def initialize(task_id:, account_id: nil)
-      @task_id = task_id
-      @account_id = account_id || task.owner&.uid
+  def initialize(task_id:, account_id: nil)
+    @task_id = task_id
+    @account_id = account_id || task.owner&.uid
+  end
+
+  def call
+    raise "Couldn't complete task w/o owner" if account_id.blank?
+
+    Balance.transaction do
+      balance = Balance.create(
+        account: account,
+        billing_cycle: BillingCycle.active,
+        credit: task.complete_price,
+        title: title,
+        metadata: {task_id: task.uid}.to_json,
+        source: :task
+      )
+      CreatedBalanceEvent.call(balance.reload)
     end
+  end
 
-    def call
-      raise "Couldn't complete task w/o owner" if account_id.blank?
+  private
 
-      Balance.transaction do
-        balance = Balance.create(
-          account: account,
-          billing_cycle: BillingCycle.active,
-          credit: task.complete_price,
-          title: title,
-          metadata: {task_id: task.uid}.to_json,
-          source: :task
-        )
-        CreatedBalanceEvent.call(balance.reload)
-      end
-    end
+  def task
+    @_task ||= Task::FindByUid.call(task_id)
+  end
 
-    private
+  def account
+    @_account ||= Account::FindByUid.call(account_id)
+  end
 
-    def task
-      @_task ||= Task::FindByUid.call(task_id)
-    end
-
-    def account
-      @_account ||= Account::FindByUid.call(account_id)
-    end
-
-    def title
-      "Complete task #{task.uid} - #{task.title}"
-    end
+  def title
+    "Complete task #{task.uid} - #{task.title}"
   end
 end

@@ -1,5 +1,6 @@
 inherit_gem:
   datarockets-style:
+    - config/base.yml
     - config/rails.yml
 
 Metrics/MethodLength:
@@ -30,3 +31,8 @@ Metrics/CyclomaticComplexity:
 Metrics/BlockLength:
   Exclude:
     - 'app/consumers/tasks_consumer.rb'
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+  Include:
+    - "app/**/*"

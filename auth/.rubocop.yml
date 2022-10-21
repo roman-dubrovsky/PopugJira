@@ -27,3 +27,8 @@ Lint/Debugger:
 Naming/MemoizedInstanceVariableName:
   Exclude: 
     - 'oauth_stragety.rb'
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+  Include:
+    - "app/**/*"
