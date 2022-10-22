@@ -11,18 +11,17 @@ class Task::AssignOwner
   end
 
   def call
-    Balance.transaction do
+    Transaction.transaction do
       task.update(owner: account)
 
-      balance = Balance.create(
+      transaction = Transaction.create(
         account: account,
         billing_cycle: BillingCycle.active,
+        task: task,
         debit: task.assign_price,
-        title: title,
-        source: :task,
-        metadata: {task_id: task.uid}.to_json
+        kind: :assign_task
       )
-      CreatedBalanceEvent.call(balance.reload)
+      Transaction::AssignedAccountEvent.call(transaction.reload)
     end
   end
 

@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+
+  "title": "Transactions.AssignedAccount.v1",
+  "description": "json schema for BE transaction events (version 1)",
+
+  "definitions": {
+    "event_data": {
+      "type": "object",
+      "properties": {
+        "public_id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "account_id": {
+          "type": "string"
+        },
+        "billing_cycle_id": {
+          "type": "string"
+        },
+        "debit_cents": {
+          "type": "integer"
+        },
+        "task_id": {
+          "type": ["string"]
+        }
+      },
+      "required": [
+        "public_id",
+        "title",
+        "time",
+        "account_id",
+        "billing_cycle_id",
+        "debit_cents",
+        "task_id"
+      ]
+    }
+  },
+
+  "type": "object",
+
+  "properties": {
+    "event_id":      { "type": "string" },
+    "event_version": { "enum": [1] },
+    "event_name":    { "enum": ["TransactionAccountAssigned"] },
+    "event_time":    { "type": "string" },
+    "producer":      { "type": "string" },
+
+    "data": { "$ref": "#/definitions/event_data" }
+  },
+
+  "required": [
+    "event_id",
+    "event_version",
+    "event_name",
+    "event_time",
+    "producer",
+    "data"
+  ]
+}

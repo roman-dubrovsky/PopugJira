@@ -13,16 +13,15 @@ class Task::Complete
   def call
     raise "Couldn't complete task w/o owner" if account_id.blank?
 
-    Balance.transaction do
-      balance = Balance.create(
+    Transaction.transaction do
+      transaction = Transaction.create(
         account: account,
         billing_cycle: BillingCycle.active,
+        task: task,
         credit: task.complete_price,
-        title: title,
-        metadata: {task_id: task.uid}.to_json,
-        source: :task
+        kind: :complete_task
       )
-      CreatedBalanceEvent.call(balance.reload)
+      Transaction::CompletedTaskEvent.call(transaction.reload)
     end
   end
 
@@ -34,9 +33,5 @@ class Task::Complete
 
   def account
     @_account ||= Account::FindByUid.call(account_id)
-  end
-
-  def title
-    "Complete task #{task.uid} - #{task.title}"
   end
 end
